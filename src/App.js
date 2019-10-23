@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
-function App() {
+
+function Timer() {
+  const [status, setStatus] = useState(false)
+  const [timer, setTimer] = useState(0)
+
+  // För att kunna använda clearinterval på setinterval definerar vi variabeln utanför för att kunna refirera inne i useEffect
+  let interval = useRef(null)
+
+  // Varje gång status ändras körs den här useEffect
+  useEffect(() => {
+    if (status === true) {
+      // från useRef använder vi .current
+      interval.current = setInterval(() => {
+
+        // Lägger på 10 till förra värdet (körs varje millesekund)
+        setTimer(prev => prev + 10)
+      }, 10)
+    } else {
+      // Stannar intervalen
+      clearInterval(interval.current)
+    }
+  }, [status])
+
+
+
+  let centiseconds = ("0" + (Math.floor(timer / 10) % 100)).slice(-2);
+  let seconds = ("0" + (Math.floor(timer / 1000) % 60)).slice(-2);
+  let minutes = ("0" + (Math.floor(timer / 60000) % 60)).slice(-2);
+  let hours = ("0" + Math.floor(timer / 3600000)).slice(-2);
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="Timer">{hours} : {minutes} : {seconds}</div>
+      <div className="Btn">
+      <button onClick={() => { setStatus(true) }}>start</button>
+      <button onClick={() => { setStatus(false) }}>stop</button>
+      <button onClick={() => { setTimer(0) }}>reset</button>
+      </div>
     </div>
   );
 }
 
-export default App;
+export default App
