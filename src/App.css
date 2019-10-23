@@ -15,14 +15,12 @@
   font-size: 4vh;
   border-radius: 4px;
   margin: 0 5px;
-  border: solid 1px transparent;
   background-color: black;
   color: #ffffff;
   cursor: pointer;
   outline: none;
   padding: 10px 20px;
   position: relative;
-  top: 0px;
   transition: all ease 0.3s;
 }
 
