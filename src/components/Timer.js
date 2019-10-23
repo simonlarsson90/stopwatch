@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 
 
@@ -6,21 +6,21 @@ function Timer() {
   const [status, setStatus] = useState(false)
   const [timer, setTimer] = useState(0)
 
-  // För att kunna använda clearinterval på setinterval definerar vi variabeln utanför för att kunna refirera inne i useEffect
-  let interval = useRef(null)
+  // För att kunna använda clearinterval på setinterval definerar vi variabeln utanför för att kunna referera inne i useEffect
+  
 
   // Varje gång status ändras körs den här useEffect
   useEffect(() => {
     if (status === true) {
       // från useRef använder vi .current
-      interval.current = setInterval(() => {
+      const intervalId = setInterval(() => {
 
         // Lägger på 10 till förra värdet (körs varje millesekund)
         setTimer(prev => prev + 10)
       }, 10)
-    } else {
-      // Stannar intervalen
-      clearInterval(interval.current)
+
+      // Avslutar intervalen
+    return () => clearInterval(intervalId)
     }
   }, [status])
 
