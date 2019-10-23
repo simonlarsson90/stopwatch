@@ -6,9 +6,7 @@ function Timer() {
   const [status, setStatus] = useState(false)
   const [timer, setTimer] = useState(0)
 
-  // För att kunna använda clearinterval på setinterval definerar vi variabeln utanför för att kunna referera inne i useEffect
   
-
   // Varje gång status ändras körs den här useEffect
   useEffect(() => {
     if (status === true) {
