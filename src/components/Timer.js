@@ -32,13 +32,12 @@ function Timer() {
 
 
 
-  //Varje gång status ändras körs den här useEffect
+ 
   useEffect(() => {
     if (status === true) {
 
       const intervalId = setInterval(() => setTime(Date.now() - start), 10)
       
-      // Avslutar intervalen
       return () => clearInterval(intervalId)
     }
   })
